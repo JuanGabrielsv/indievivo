@@ -1,6 +1,6 @@
 package com.santech.indievivobackend.enums;
 
-public enum Role {
+public enum ERole {
     ROLE_USER,
     ROLE_ADMIN
 }
