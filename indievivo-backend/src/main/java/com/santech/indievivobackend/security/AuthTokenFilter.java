@@ -33,7 +33,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain)
+            throws ServletException, IOException {
+
+        logger.info("AuthTokenFilter: Petición recibida para la URL: {} {}", request.getMethod(), request.getRequestURI());
+
         try {
             // 1.Extraer el token JWT de la cabecera de la peticion
             String jwt = parseJwt(request);
