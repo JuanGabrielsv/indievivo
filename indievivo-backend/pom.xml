@@ -44,6 +44,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Dependencia para Validación (JSR 380) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!-- Herramientas necesarias para hacer pruebas (test) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
