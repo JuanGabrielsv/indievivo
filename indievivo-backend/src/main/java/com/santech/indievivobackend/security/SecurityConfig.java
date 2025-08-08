@@ -1,5 +1,6 @@
 package com.santech.indievivobackend.security;
 
+import com.santech.indievivobackend.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,12 +13,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity // Habilita la seguridad web de Spring en nuestro proyecto. Es crucial.
 @EnableMethodSecurity // Permite user anotaciones de seguridad en los metodos.
 public class SecurityConfig {
+
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtUtils jwtUtils;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtUtils jwtUtils) {
+        this.userDetailsService = userDetailsService;
+        this.jwtUtils = jwtUtils;
+    }
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,8 +59,10 @@ public class SecurityConfig {
                         // Para cualquier otra petición, se requiere autenticación.
                         .anyRequest().authenticated());
 
+        // Añadimos AuthTokenFilter en la cadena, justo antes de filtro.
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
         // Construimos y devolvemos la cadena de filtros configurada.
         return http.build();
     }
 }
-
