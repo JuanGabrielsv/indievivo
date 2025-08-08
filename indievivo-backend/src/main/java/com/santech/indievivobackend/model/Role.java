@@ -3,6 +3,8 @@ package com.santech.indievivobackend.model;
 import com.santech.indievivobackend.enums.ERole;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -16,7 +18,8 @@ public class Role {
     private ERole name;
 
     // Constructor vacío (requerido por JPA)
-    public Role() {}
+    public Role() {
+    }
 
     // Constructor para facilitar la creación
     public Role(ERole name) {
@@ -38,5 +41,17 @@ public class Role {
 
     public void setName(ERole name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
