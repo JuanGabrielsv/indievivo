@@ -60,7 +60,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -84,6 +84,11 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     // --- Getters adicionales y metodo equals/hashCode ---
+
+    // Como guardamos el email en el token, dejaremos este metodo por si necesitamos el username.
+    public String getUsernameReal() {
+        return username;
+    }
 
     public Long getId() {
         return id;

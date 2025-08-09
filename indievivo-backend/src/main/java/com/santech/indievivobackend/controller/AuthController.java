@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     // 2. Endpoint para el login (Autenticacion).
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<JwtResponseDTO> authenticateUser(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
         // Delegamos toda la lógica al servicio
         JwtResponseDTO jwtResponse = authService.loginUser(loginRequestDTO);
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     // 3. Endpoint para el Registro.
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<MessageResponseDTO> registerUser(@Valid @RequestBody RegisterRequestDTO registerRequestDTO) {
         // Delegamos al servicio la lógica
         authService.registerUser(registerRequestDTO);
