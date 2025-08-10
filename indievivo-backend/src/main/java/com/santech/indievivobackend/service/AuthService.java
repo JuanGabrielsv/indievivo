@@ -58,7 +58,7 @@ public class AuthService {
 
         return new JwtResponseDTO(jwt,
                 userDetails.getId(),
-                userDetails.getUsername(),
+                userDetails.getUsernameReal(),
                 userDetails.getEmail(),
                 roles);
     }
