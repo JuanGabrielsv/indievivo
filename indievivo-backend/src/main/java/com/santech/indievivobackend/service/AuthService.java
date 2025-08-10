@@ -79,7 +79,6 @@ public class AuthService {
                 registerRequestDTO.nombre(),
                 registerRequestDTO.primerApellido(),
                 registerRequestDTO.segundoApellido(),
-                registerRequestDTO.telefonoMovil(),
                 registerRequestDTO.ciudad()
         );
 

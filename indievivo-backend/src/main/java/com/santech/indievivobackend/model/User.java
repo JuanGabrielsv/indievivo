@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email"), @UniqueConstraint(columnNames = "telefono_movil")})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
 public class User {
 
     @Id
@@ -25,9 +25,6 @@ public class User {
 
     @Column(name = "segundo_apellido", nullable = false)
     private String segundoApellido;
-
-    @Column(name = "telefono_movil", nullable = false, length = 20)
-    private String telefonoMovil;
 
     @Column(name = "ciudad", nullable = false)
     private String ciudad;
@@ -58,14 +55,13 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password, String nombre, String primerApellido, String segundoApellido, String telefonoMovil, String ciudad) {
+    public User(String username, String email, String password, String nombre, String primerApellido, String segundoApellido, String ciudad) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.nombre = nombre;
         this.primerApellido = primerApellido;
         this.segundoApellido = segundoApellido;
-        this.telefonoMovil = telefonoMovil;
         this.ciudad = ciudad;
     }
 
@@ -101,14 +97,6 @@ public class User {
 
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
-    }
-
-    public String getTelefonoMovil() {
-        return telefonoMovil;
-    }
-
-    public void setTelefonoMovil(String telefonoMovil) {
-        this.telefonoMovil = telefonoMovil;
     }
 
     public String getCiudad() {

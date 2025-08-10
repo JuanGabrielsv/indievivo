@@ -28,9 +28,6 @@ public record RegisterRequestDTO(
         String segundoApellido,
 
         @NotBlank
-        String telefonoMovil,
-
-        @NotBlank
         String ciudad
 ) {
 }
