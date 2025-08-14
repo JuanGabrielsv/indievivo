@@ -14,6 +14,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity // Habilita la seguridad web de Spring en nuestro proyecto. Es crucial.
@@ -22,15 +27,37 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtUtils jwtUtils;
+    private final AuthEntryPointJwt unauthorizedHandler;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtUtils jwtUtils) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
+                          JwtUtils jwtUtils,
+                          AuthEntryPointJwt unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.jwtUtils = jwtUtils;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter(jwtUtils, userDetailsService);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        // Origenes permitidos.
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+        // Metodos HTTP que permitimos.
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // Cabeceras que permitimos.
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        // Permitimos que el navegador envie credenciales.
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Aplicamos esta configuración a todas las rutas de tu API.
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
     }
 
     @Bean
