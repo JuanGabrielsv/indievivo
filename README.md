@@ -38,18 +38,6 @@
 
 ---
 
-## 📂 Estructura del proyecto
-
-indievivo/
-├─ apps/
-│ ├─ web/ # Frontend Next.js + React
-│ └─ api/ # Backend NestJS + Prisma
-├─ prisma/ # Esquema de base de datos y migraciones
-├─ package.json # Configuración raíz del monorepo
-└─ turbo.json # Configuración de Turborepo
-
----
-
 ## 📄 Licencia
 
 Este proyecto está bajo **licencia MIT**, permitiendo su uso, modificación y distribución, siempre reconociendo al autor: **Juan Gabriel Sánchez Vivero**.
