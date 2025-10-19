@@ -13,3 +13,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ROLES PARA LOS Usuarios
+model Rol {
+  id            String   @id @default(uuid())
+  nombre        String   @unique
+  descripcion   String
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+
+  usuarios Usuario[] // 1 Rol -> muchos Usuarios
+}
+
+model Usuario {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  nombre          String
+  primerApellido  String
+  segundoApellido String
+  contrasena      String
+  creadoEn        DateTime @default(now())
+  actualizadoEn   DateTime @updatedAt
+
+  // relación 1:many — un Usuario tiene un Rol (opcional para facilitar migraciones)
+  rolId String?
+  rol   Rol?    @relation(fields: [rolId], references: [id])
+}
