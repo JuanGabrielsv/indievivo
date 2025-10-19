@@ -15,7 +15,7 @@
 
 ---
 
-## 🛠 Tecnologías principales
+## 🛠 Tecnologías principales.
 
 ### Frontend
 - **Next.js** (React framework moderno)  
