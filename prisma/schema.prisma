@@ -14,28 +14,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ROLES PARA LOS Usuarios
-model Rol {
-  id            String   @id @default(uuid())
-  nombre        String   @unique
-  descripcion   String
-  creadoEn      DateTime @default(now())
-  actualizadoEn DateTime @updatedAt
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  emailVerified     Boolean   @default(false)
+  emailVerifiedAt   DateTime?
+  verificationToken String?   @unique
+  password          String
+  name              String
+  firstSurname      String
+  secondSurname     String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  usuarios Usuario[] // 1 Rol -> muchos Usuarios
+  roles UserRole[]
+
+  @@map("users")
 }
 
-model Usuario {
-  id              String   @id @default(uuid())
-  email           String   @unique
-  nombre          String
-  primerApellido  String
-  segundoApellido String
-  contrasena      String
-  creadoEn        DateTime @default(now())
-  actualizadoEn   DateTime @updatedAt
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
 
-  // relación 1:many — un Usuario tiene un Rol (opcional para facilitar migraciones)
-  rolId String?
-  rol   Rol?    @relation(fields: [rolId], references: [id])
+  users UserRole[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  userId     String
+  roleId     String
+  assignedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
 }
